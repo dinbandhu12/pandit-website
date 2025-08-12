@@ -42,10 +42,10 @@ const BlogCard = ({ post }) => {
   }
 
   return (
-    <article className="card p-6 hover:shadow-md transition-shadow duration-200 fade-in">
+    <article className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200">
       <div className="space-y-4">
         <div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">
             {post.title}
           </h2>
           {post.subtitle && (
@@ -70,7 +70,7 @@ const BlogCard = ({ post }) => {
           
           <Link 
             to={`/post/${post.id}`}
-            className="flex items-center space-x-1 text-primary-600 hover:text-primary-700 font-medium text-sm transition-colors duration-200"
+            className="flex items-center space-x-1 text-blue-600 hover:text-blue-700 font-medium text-sm transition-colors duration-200"
           >
             <span>Read more</span>
             <ArrowRight className="h-4 w-4" />

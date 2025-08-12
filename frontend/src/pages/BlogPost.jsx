@@ -11,6 +11,8 @@ const BlogPost = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+
   useEffect(() => {
     fetchPost()
   }, [id])
@@ -18,7 +20,7 @@ const BlogPost = () => {
   const fetchPost = async () => {
     try {
       setLoading(true)
-      const response = await axios.get(`/api/posts/${id}`)
+      const response = await axios.get(`${API_URL}/api/posts/${id}`)
       setPost(response.data)
       setError(null)
     } catch (err) {
@@ -74,7 +76,7 @@ const BlogPost = () => {
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-2 text-primary-600 hover:text-primary-700 transition-colors duration-200"
+              className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors duration-200"
             >
               <ExternalLink className="h-4 w-4" />
               <span className="text-sm">{link}</span>
@@ -93,7 +95,7 @@ const BlogPost = () => {
     return (
       <div className="max-w-4xl mx-auto text-center py-12">
         <div className="text-red-600 mb-4">{error || 'Post not found'}</div>
-        <Link to="/" className="btn btn-primary">
+        <Link to="/" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
           Back to Home
         </Link>
       </div>
@@ -112,7 +114,7 @@ const BlogPost = () => {
         </Link>
       </div>
 
-      <article className="card p-8">
+      <article className="bg-white rounded-lg shadow-md p-8">
         <header className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             {post.title}

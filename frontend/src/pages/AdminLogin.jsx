@@ -1,7 +1,9 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Lock, User } from 'lucide-react'
 
 const AdminLogin = ({ onLogin }) => {
+  const navigate = useNavigate()
   const [credentials, setCredentials] = useState({
     username: '',
     password: ''
@@ -19,6 +21,7 @@ const AdminLogin = ({ onLogin }) => {
       setTimeout(() => {
         onLogin()
         setLoading(false)
+        navigate('/admin') // Navigate to admin page after successful login
       }, 500) // Simulate API call
     } else {
       setTimeout(() => {
@@ -38,10 +41,10 @@ const AdminLogin = ({ onLogin }) => {
   return (
     <div className="min-h-[60vh] flex items-center justify-center">
       <div className="max-w-md w-full">
-        <div className="card p-8">
+        <div className="bg-white rounded-lg shadow-md p-8">
           <div className="text-center mb-8">
-            <div className="mx-auto w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mb-4">
-              <Lock className="h-6 w-6 text-primary-600" />
+            <div className="mx-auto w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+              <Lock className="h-6 w-6 text-blue-600" />
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mb-2">Admin Login</h1>
             <p className="text-gray-600">Enter your credentials to access the admin panel</p>
@@ -69,7 +72,7 @@ const AdminLogin = ({ onLogin }) => {
                   value={credentials.username}
                   onChange={handleChange}
                   required
-                  className="input pl-10"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter username"
                 />
               </div>
@@ -90,7 +93,7 @@ const AdminLogin = ({ onLogin }) => {
                   value={credentials.password}
                   onChange={handleChange}
                   required
-                  className="input pl-10"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter password"
                 />
               </div>
@@ -99,7 +102,7 @@ const AdminLogin = ({ onLogin }) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>

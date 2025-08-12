@@ -11,6 +11,8 @@ const AdminPanel = () => {
   const [error, setError] = useState(null)
   const [deleteLoading, setDeleteLoading] = useState(null)
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+
   useEffect(() => {
     fetchPosts()
   }, [])
@@ -18,7 +20,7 @@ const AdminPanel = () => {
   const fetchPosts = async () => {
     try {
       setLoading(true)
-      const response = await axios.get('/api/posts')
+      const response = await axios.get(`${API_URL}/api/posts`)
       setPosts(response.data)
       setError(null)
     } catch (err) {
@@ -36,7 +38,7 @@ const AdminPanel = () => {
 
     try {
       setDeleteLoading(id)
-      await axios.delete(`/api/posts/${id}`)
+      await axios.delete(`${API_URL}/api/posts/${id}`)
       setPosts(posts.filter(post => post.id !== id))
     } catch (err) {
       console.error('Error deleting post:', err)
@@ -88,8 +90,8 @@ const AdminPanel = () => {
           <p className="text-gray-600">Manage your blog posts</p>
         </div>
         <Link 
-          to="/admin/post/new" 
-          className="btn btn-primary flex items-center space-x-2"
+          to="/admin/new" 
+          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center space-x-2"
         >
           <Plus className="h-4 w-4" />
           <span>New Post</span>
@@ -105,12 +107,12 @@ const AdminPanel = () => {
       {posts.length === 0 ? (
         <div className="text-center py-12">
           <div className="text-gray-500 mb-4">No blog posts yet.</div>
-          <Link to="/admin/post/new" className="btn btn-primary">
+          <Link to="/admin/new" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
             Create Your First Post
           </Link>
         </div>
       ) : (
-        <div className="card overflow-hidden">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
@@ -160,13 +162,13 @@ const AdminPanel = () => {
                       <div className="flex items-center justify-end space-x-2">
                         <Link
                           to={`/post/${post.id}`}
-                          className="text-primary-600 hover:text-primary-700 p-1"
+                          className="text-blue-600 hover:text-blue-700 p-1"
                           title="View post"
                         >
                           <Eye className="h-4 w-4" />
                         </Link>
                         <Link
-                          to={`/admin/post/edit/${post.id}`}
+                          to={`/admin/edit/${post.id}`}
                           className="text-blue-600 hover:text-blue-700 p-1"
                           title="Edit post"
                         >

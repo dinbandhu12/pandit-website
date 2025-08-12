@@ -11,6 +11,8 @@ const PostEditor = () => {
   const navigate = useNavigate()
   const isEditing = Boolean(id)
   
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+  
   const [post, setPost] = useState({
     title: '',
     subtitle: '',
@@ -32,7 +34,7 @@ const PostEditor = () => {
   const fetchPost = async () => {
     try {
       setFetching(true)
-      const response = await axios.get(`/api/posts/${id}`)
+      const response = await axios.get(`${API_URL}/api/posts/${id}`)
       setPost(response.data)
       setError(null)
     } catch (err) {
@@ -63,12 +65,12 @@ const PostEditor = () => {
       setError(null)
 
       if (isEditing) {
-        await axios.put(`/api/posts/${id}`, post)
+        await axios.put(`${API_URL}/api/posts/${id}`, post)
       } else {
-        await axios.post('/api/posts', post)
+        await axios.post(`${API_URL}/api/posts`, post)
       }
 
-      navigate('/blog-posts-admin')
+      navigate('/admin')
     } catch (err) {
       console.error('Error saving post:', err)
       setError('Failed to save post. Please try again.')
@@ -104,7 +106,7 @@ const PostEditor = () => {
     return (
       <div className="max-w-4xl mx-auto text-center py-12">
         <div className="text-red-600 mb-4">{error}</div>
-        <Link to="/blog-posts-admin" className="btn btn-primary">
+        <Link to="/admin" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
           Back to Admin Panel
         </Link>
       </div>
@@ -116,7 +118,7 @@ const PostEditor = () => {
       <div className="flex justify-between items-center mb-8">
         <div className="flex items-center space-x-4">
           <Link 
-            to="/blog-posts-admin" 
+            to="/admin" 
             className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -131,7 +133,7 @@ const PostEditor = () => {
           <button
             type="button"
             onClick={() => setShowPreview(!showPreview)}
-            className="btn btn-secondary flex items-center space-x-2"
+            className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 flex items-center space-x-2"
           >
             {showPreview ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             <span>{showPreview ? 'Hide Preview' : 'Preview'}</span>
@@ -146,7 +148,7 @@ const PostEditor = () => {
       )}
 
       {showPreview ? (
-        <div className="card p-8">
+        <div className="bg-white rounded-lg shadow-md p-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">{post.title || 'Untitled'}</h1>
           {post.subtitle && (
             <p className="text-xl text-gray-600 mb-6">{post.subtitle}</p>
@@ -170,7 +172,7 @@ const PostEditor = () => {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="card p-6">
+          <div className="bg-white rounded-lg shadow-md p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
@@ -182,7 +184,7 @@ const PostEditor = () => {
                   value={post.title}
                   onChange={(e) => handleChange('title', e.target.value)}
                   required
-                  className="input"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter post title"
                 />
               </div>
@@ -196,7 +198,7 @@ const PostEditor = () => {
                   id="subtitle"
                   value={post.subtitle}
                   onChange={(e) => handleChange('subtitle', e.target.value)}
-                  className="input"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter subtitle"
                 />
               </div>
@@ -211,7 +213,7 @@ const PostEditor = () => {
                 id="tags"
                 value={post.tags}
                 onChange={(e) => handleChange('tags', e.target.value)}
-                className="input"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter tags separated by commas (e.g., technology, programming, web)"
               />
             </div>
@@ -225,13 +227,13 @@ const PostEditor = () => {
                 id="links"
                 value={post.links}
                 onChange={(e) => handleChange('links', e.target.value)}
-                className="input"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter links separated by commas"
               />
             </div>
           </div>
 
-          <div className="card p-6">
+          <div className="bg-white rounded-lg shadow-md p-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Content *
             </label>
@@ -245,13 +247,13 @@ const PostEditor = () => {
           </div>
 
           <div className="flex justify-end space-x-4">
-            <Link to="/blog-posts-admin" className="btn btn-secondary">
+            <Link to="/admin" className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">
               Cancel
             </Link>
             <button
               type="submit"
               disabled={loading}
-              className="btn btn-primary flex items-center space-x-2 disabled:opacity-50"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center space-x-2 disabled:opacity-50"
             >
               <Save className="h-4 w-4" />
               <span>{loading ? 'Saving...' : (isEditing ? 'Update Post' : 'Create Post')}</span>
