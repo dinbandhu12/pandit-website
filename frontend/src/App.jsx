@@ -6,6 +6,7 @@ import BlogPost from './pages/BlogPost';
 import AdminLogin from './pages/AdminLogin';
 import AdminPanel from './pages/AdminPanel';
 import PostEditor from './pages/PostEditor';
+import About from './pages/About';
 import './App.css';
 
 // Protected Route Component
@@ -30,6 +31,7 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/post/:id" element={<BlogPost />} />
             <Route path="/admin/login" element={<AdminLogin onLogin={handleLogin} />} />

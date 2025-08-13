@@ -36,6 +36,12 @@ const Navigation = () => {
               Home
             </Link>
             <Link 
+              to="/about" 
+              className="text-gray-700 hover:text-saffron transition-colors duration-200 font-medium"
+            >
+              About
+            </Link>
+            <Link 
               to="/services" 
               className="text-gray-700 hover:text-saffron transition-colors duration-200 font-medium"
             >
@@ -92,6 +98,13 @@ const Navigation = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
+              </Link>
+              <Link 
+                to="/about" 
+                className="text-gray-700 hover:text-saffron transition-colors duration-200 font-medium px-4 py-2 rounded-lg hover:bg-gray-50"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                About
               </Link>
               <Link 
                 to="/services" 
